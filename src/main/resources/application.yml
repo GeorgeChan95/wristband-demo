@@ -1,0 +1,47 @@
+server:
+  port: 1030
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    # 配置请求编码
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+spring:
+  application:
+    name: wristband-service
+  lifecycle:
+    # 设置缓冲期，最大等待时间
+    timeout-per-shutdown-phase: 30s
+  main:
+    allow-bean-definition-overriding: false
+  servlet:
+    multipart:
+      # 允许多文件上传
+      enabled: true
+      # 上传单个文件的最大值
+      max-file-size: 10MB
+      # 上传的总文件最大值
+      max-request-size: 100MB
+########################################## logback日志配置 #####################################################
+logging:
+  # 使用的logback文件
+  config: classpath:logback/logback-spring.xml
+########################################## actuator服务监控 ##############################################
+management:
+  endpoint:
+    # 允许actuator关机
+    shutdown:
+      enabled: true
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+########################################## netty配置 #####################################################
+netty:
+  server:
+    # netty服务端端口
+    port: 8825
