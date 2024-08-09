@@ -36,6 +36,7 @@ public class RequestConnectionHandler implements DataHandler {
 
     @Override
     public void handler(ChannelHandlerContext ctx, Protocol protocol) {
+        log.info("开始处理手环连接请求......");
         WristbandDataProtocol wristbandData = (WristbandDataProtocol) protocol;
         byte[] payload = wristbandData.payload();
 

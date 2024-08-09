@@ -42,6 +42,7 @@ public class StatusParamsHandler implements DataHandler {
 
     @Override
     public void handler(ChannelHandlerContext ctx, Protocol protocol) throws JsonProcessingException {
+        log.info("开始处理手环状态参数上传请求......");
         WristbandDataProtocol wristbandData = (WristbandDataProtocol) protocol;
         byte[] payload = wristbandData.payload();
 

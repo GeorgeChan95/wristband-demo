@@ -28,8 +28,6 @@ public class DataDecoder extends ByteToMessageDecoder {
         int length = in.readableBytes();// 消息长度
         byte[] bytes = new byte[length];
         in.readBytes(bytes);
-        String hex1 = Convert.toHex(bytes);
-        log.info("\n接收到消息: {}\n", hex1);
 
         // 消息头
 //        byte[] head = NettyUtil.getByte(bytes, index, 4);
@@ -58,24 +56,5 @@ public class DataDecoder extends ByteToMessageDecoder {
         dataProtocol.setPayload(payloadBytes);
         dataProtocol.setChecksum(checksum);
         list.add(dataProtocol);
-
-        // 释放内存
-//        ReferenceCountUtil.release(in);
-
-        /*
-        // 小端模式转大端模式
-        byte[] reverse = ArrayUtil.reverse(bytes);
-        // 转十六进制
-        String hex1 = Convert.toHex(reverse);
-        // 转十进制
-        String imei = HexUtil.toBigInteger(hex1).toString();
-        int anInt = NumberUtil.toInt(reverse);
-        System.out.println(111);
-
-        int i = ByteUtil.bytesToInt(bytes, 0, ByteOrder.LITTLE_ENDIAN);
-        System.out.println(i);
-        byte[] aaa = new byte[]{(byte) 0xbd, (byte) 0xbd, (byte) 0xbd, (byte) 0xbd};
-        System.out.println(hex);
-*/
     }
 }

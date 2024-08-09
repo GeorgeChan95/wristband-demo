@@ -1,8 +1,8 @@
 package com.george.netty.handler;
 
 import cn.hutool.core.convert.Convert;
-import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.ObjectUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.george.message.Protocol;
 import com.george.message.WristbandDataProtocol;
 import com.george.model.enums.MessageTypeEnum;
@@ -11,15 +11,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 /**
- * @ClassName SimIccidHandler
- * @Description 手环sim iccid数据上传处理
+ * @ClassName CellInfoHandler
+ * @Description wifi和基站信息上传
  * @Author George
- * @Date 2024/8/8 18:02
+ * @Date 2024/8/9 13:16
  */
 @Slf4j
 @Component
-public class SimIccidHandler implements DataHandler {
-    private static final MessageTypeEnum messageTypeEnum = MessageTypeEnum.SIM_ICCID;
+public class CellInfoHandler implements DataHandler{
+    private static final MessageTypeEnum messageTypeEnum = MessageTypeEnum.CELL_INFO;
 
     @Override
     public boolean matches(MessageTypeEnum messageId) {
@@ -27,13 +27,11 @@ public class SimIccidHandler implements DataHandler {
     }
 
     @Override
-    public void handler(ChannelHandlerContext ctx, Protocol protocol) {
-        log.info("开始处理手环SIM ICCID请求......");
+    public void handler(ChannelHandlerContext ctx, Protocol protocol) throws JsonProcessingException {
+        log.info("开始处理手环wifi和基站信息上传上传请求......");
         WristbandDataProtocol wristbandData = (WristbandDataProtocol) protocol;
         byte[] payload = wristbandData.payload();
-        // 小端模式转大端模式
-        payload = ArrayUtil.reverse(payload);
-        String iccid = Convert.toHex(payload);
-        log.info("\n手环SIM ICCID为: {}\n", iccid);
+        String hex = Convert.toHex(payload);
+        log.info("\nwifi和基站信息上传信息有效负载: {}\n", hex);
     }
 }
