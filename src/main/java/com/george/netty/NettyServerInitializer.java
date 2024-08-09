@@ -1,10 +1,7 @@
 package com.george.netty;
 
 import com.george.model.constant.WristbandConstant;
-import com.george.netty.handler.DataDecoder;
-import com.george.netty.handler.DataHandler;
-import com.george.netty.handler.UnpackHandler;
-import com.george.netty.handler.WristbandDataHandler;
+import com.george.netty.handler.*;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.ByteBufUtil;
@@ -24,10 +21,11 @@ public class NettyServerInitializer extends ChannelInitializer<SocketChannel> {
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
 
+        // 消息预处理器
+        pipeline.addLast("preHandler", new InBoundPreHandler());
         // 拆包处理器
-        ByteBuf buffer = ByteBufAllocator.DEFAULT.buffer(4);
-        buffer.writeBytes(WristbandConstant.header);
-        pipeline.addLast("unpackHandler", new UnpackHandler(buffer));
+        ByteBuf delimiter = ByteBufAllocator.DEFAULT.buffer(4).writeBytes(WristbandConstant.header);
+        pipeline.addLast("unpackHandler", new UnpackHandler(delimiter));
         // 解码器
         pipeline.addLast("decoder", new DataDecoder());
         // 处理器

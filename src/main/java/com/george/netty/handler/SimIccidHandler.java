@@ -10,8 +10,6 @@ import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.Charset;
-
 /**
  * @ClassName SimIccidHandler
  * @Description 手环sim iccid数据上传处理

@@ -2,6 +2,7 @@ package com.george.netty.handler;
 
 import cn.hutool.core.convert.Convert;
 import com.george.message.WristbandDataProtocol;
+import com.george.model.constant.WristbandConstant;
 import com.george.model.enums.MessageTypeEnum;
 import com.george.utils.NettyUtil;
 import io.netty.buffer.ByteBuf;
@@ -31,9 +32,10 @@ public class DataDecoder extends ByteToMessageDecoder {
         log.info("\n接收到消息: {}\n", hex1);
 
         // 消息头
-        byte[] head = NettyUtil.getByte(bytes, index, 4);
+//        byte[] head = NettyUtil.getByte(bytes, index, 4);
+//        index += head.length;
+        byte[] head = WristbandConstant.header;
         String hex = Convert.toHex(head);
-        index += head.length;
 
         // 报文标示符
         byte[] messageIdBytes = NettyUtil.getByte(bytes, index, 1);

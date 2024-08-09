@@ -1,5 +1,6 @@
 package com.george.netty.handler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.george.message.Protocol;
 import com.george.model.enums.MessageTypeEnum;
 import io.netty.channel.ChannelHandlerContext;
@@ -24,5 +25,5 @@ public interface DataHandler {
      * @param ctx 数据通道上下文
      * @param protocol 数据对象
      */
-    void handler(ChannelHandlerContext ctx, Protocol protocol);
+    void handler(ChannelHandlerContext ctx, Protocol protocol) throws JsonProcessingException;
 }
