@@ -83,7 +83,7 @@ public class HeartbeatUpHandler implements DataHandler{
                 imei = key;
             }
         }
-        log.info("\n手环心跳信息如下, 手环编码:{},\t 电量值: {},\t信号强度: {},\t 时间戳: {}\n", imei, batType, signalStrength, timestamp);
+        log.info("\n手环心跳信息如下, 手环编码:{},\t 电量值: {},\t信号强度: {},\t 时间戳: {}\n", imei, batVolt, signalStrength, timestamp);
     }
 
     /**
