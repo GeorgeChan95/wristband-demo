@@ -28,7 +28,7 @@ public class CellInfoHandler implements DataHandler{
 
     @Override
     public void handler(ChannelHandlerContext ctx, Protocol protocol) throws JsonProcessingException {
-        log.info("开始处理手环wifi和基站信息上传上传请求......");
+        log.info("开始处理手环wifi和基站信息上传请求......");
         WristbandDataProtocol wristbandData = (WristbandDataProtocol) protocol;
         byte[] payload = wristbandData.payload();
         String hex = Convert.toHex(payload);

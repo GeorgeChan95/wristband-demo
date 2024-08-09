@@ -1,5 +1,10 @@
 package com.george.model.constant;
 
+import com.google.common.collect.Maps;
+import io.netty.channel.Channel;
+
+import java.util.Map;
+
 /**
  * @ClassName WristbandConstant
  * @Description 常量
@@ -19,4 +24,6 @@ public interface WristbandConstant {
      * BDBDBDF301
      */
     byte[] heartbeatReply = new byte[]{(byte) 0xbd, (byte) 0xbd, (byte) 0xbd, (byte) 0xbd, (byte) 0xf3, 0x01};
+
+    Map<String, Channel> channelMap = Maps.newConcurrentMap();
 }
