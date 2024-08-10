@@ -25,5 +25,8 @@ public interface WristbandConstant {
      */
     byte[] heartbeatReply = new byte[]{(byte) 0xbd, (byte) 0xbd, (byte) 0xbd, (byte) 0xbd, (byte) 0xf3, 0x01};
 
+    /**
+     * 手环的连接信息, key是手环的编码, value是手环当前的连接channel
+     */
     Map<String, Channel> channelMap = Maps.newConcurrentMap();
 }

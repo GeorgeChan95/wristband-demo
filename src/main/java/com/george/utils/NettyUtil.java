@@ -1,10 +1,15 @@
 package com.george.utils;
 
-import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.HexUtil;
+import cn.hutool.core.util.ObjectUtil;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
+
+import java.util.Iterator;
+
+import static com.george.model.constant.WristbandConstant.channelMap;
 
 @Slf4j
 public class NettyUtil {
@@ -31,7 +36,6 @@ public class NettyUtil {
      * @return
      */
     public static byte getChecksum(ByteBuf buffer) {
-//        buffer.clear();
         if (ObjectUtils.isEmpty(buffer) || buffer.readableBytes() == 0) {
             log.error("\n计算校验和失败, buffer为空");
             return 0x00;
@@ -48,5 +52,22 @@ public class NettyUtil {
         ck_sum = (byte) (0xFF - ck_sum);
         String hex = HexUtil.toHex(ck_sum);
         return ck_sum;
+    }
+
+    /**
+     * 根据连接通道信息,获取连接对应的手环的设备号
+     * @param channel 通道连接信息
+     * @return
+     */
+    public static String getImei(Channel channel) {
+        String imei = "";
+        Iterator<String> iterator = channelMap.keySet().iterator();
+        while (iterator.hasNext()) {
+            String key = iterator.next();
+            if (ObjectUtil.equal(channel, channelMap.get(key))) {
+                imei = key;
+            }
+        }
+        return imei;
     }
 }

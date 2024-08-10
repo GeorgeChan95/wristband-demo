@@ -11,17 +11,9 @@ import com.george.model.constant.WristbandConstant;
 import com.george.model.enums.MessageTypeEnum;
 import com.george.utils.NettyUtil;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufAllocator;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-
-import java.math.BigInteger;
-import java.util.Iterator;
-import java.util.Map;
-
-import static com.george.model.constant.WristbandConstant.channelMap;
 
 /**
  * @ClassName HeartbeatUpHandler
@@ -74,16 +66,13 @@ public class HeartbeatUpHandler implements DataHandler{
         // utc时间戳
         int timestamp = getTimestamp(payload, index);
 
-        String imei = "";
-        Iterator<String> iterator = channelMap.keySet().iterator();
-        while (iterator.hasNext()) {
-            String key = iterator.next();
-            boolean flag = channelMap.get(key).equals(ctx.channel());
-            if (flag) {
-                imei = key;
-            }
-        }
+        // 手环设备号
+        String imei = NettyUtil.getImei(ctx.channel());
         log.info("\n手环心跳信息如下, 手环编码:{},\t 电量值: {},\t信号强度: {},\t 时间戳: {}\n", imei, batVolt, signalStrength, timestamp);
+
+        // 对心跳信息进行响应
+        ByteBuf byteBuf = ctx.alloc().buffer().writeBytes(WristbandConstant.heartbeatReply);
+        ctx.channel().writeAndFlush(byteBuf);
     }
 
     /**

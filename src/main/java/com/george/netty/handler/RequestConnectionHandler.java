@@ -6,10 +6,12 @@ import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.george.message.Protocol;
 import com.george.message.WristbandDataProtocol;
+import com.george.model.constant.WristbandConstant;
 import com.george.model.enums.MessageTypeEnum;
 import com.george.utils.NettyUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ObjectUtils;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Map;
 
 /**
  * @ClassName RequestConnectionHandler
@@ -37,6 +40,8 @@ public class RequestConnectionHandler implements DataHandler {
     @Override
     public void handler(ChannelHandlerContext ctx, Protocol protocol) {
         log.info("开始处理手环连接请求......");
+        Channel channel = ctx.channel(); // 当前请求的连接通道
+
         WristbandDataProtocol wristbandData = (WristbandDataProtocol) protocol;
         byte[] payload = wristbandData.payload();
 
@@ -60,24 +65,24 @@ public class RequestConnectionHandler implements DataHandler {
                 versionBytes, versionHex,
                 imeiBytes, imeiHex, imei);
 
-        // 回复设备
+        // 将手环的连接信息放到map中存储
+        Map<String, Channel> channelMap = WristbandConstant.channelMap;
+        channelMap.put(imei, channel);
+
+        // 回复连接请求消息内容
         ByteBuf byteBuf = connectionReply();
-        byteBuf.resetReaderIndex();
+        byteBuf.resetReaderIndex();// 重置读索引
 
-        int length = byteBuf.readableBytes();// 消息长度
-        byte[] bytes = new byte[length];
+        byte[] bytes = new byte[byteBuf.readableBytes()];
         byteBuf.readBytes(bytes);
-        String hex = Convert.toHex(bytes);
-        System.out.println(hex);
+        log.info("\n服务端响应手环连接信息: {}\n", Convert.toHex(bytes));
 
-        // 重置读索引
         byteBuf.resetReaderIndex();
-        // 写入通道
         ctx.channel().writeAndFlush(byteBuf);
     }
 
     /**
-     *
+     * 回复手环连接请求, 获取回复内容
      */
     private ByteBuf connectionReply() {
         ByteBuf buffer = ByteBufAllocator.DEFAULT.buffer(4);
@@ -100,6 +105,7 @@ public class RequestConnectionHandler implements DataHandler {
         // payload
         buffer.writeBytes(new byte[]{(byte) 0xbd, (byte) 0xbd,(byte) 0xbd,(byte) 0xbd});
 
+        // 校验和
         byte checksum =  NettyUtil.getChecksum(buffer);
         String checksumHex = Convert.toHex(new byte[]{checksum});
         buffer.writeByte(checksum);
