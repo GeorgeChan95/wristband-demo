@@ -25,7 +25,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class HeartbeatUpHandler implements DataHandler{
 
-    private static final MessageTypeEnum messageTypeEnum = MessageTypeEnum.HEARTBEAT_UP;
+    private static final MessageTypeEnum messageTypeEnum = MessageTypeEnum.HEARTBEAT_UP_F9;
 
     @Override
     public boolean matches(MessageTypeEnum messageId) {

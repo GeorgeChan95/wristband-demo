@@ -1,7 +1,6 @@
 package com.george.netty.handler;
 
 import cn.hutool.core.convert.Convert;
-import cn.hutool.core.util.ByteUtil;
 import cn.hutool.core.util.HexUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -33,7 +32,7 @@ public class StatusParamsHandler implements DataHandler {
     @Autowired
     private ObjectMapper objectMapper;
 
-    private static final MessageTypeEnum messageTypeEnum = MessageTypeEnum.STATUS_PARAMS;
+    private static final MessageTypeEnum messageTypeEnum = MessageTypeEnum.STATUS_PARAMS_A9;
 
     @Override
     public boolean matches(MessageTypeEnum messageId) {

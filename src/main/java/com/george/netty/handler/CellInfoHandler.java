@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class CellInfoHandler implements DataHandler{
-    private static final MessageTypeEnum messageTypeEnum = MessageTypeEnum.CELL_INFO;
+    private static final MessageTypeEnum messageTypeEnum = MessageTypeEnum.CELL_INFO_A4;
 
     @Override
     public boolean matches(MessageTypeEnum messageId) {

@@ -14,7 +14,6 @@ import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -30,7 +29,7 @@ import java.util.Map;
 @Slf4j
 @Component
 public class RequestConnectionHandler implements DataHandler {
-    private static final MessageTypeEnum messageTypeEnum = MessageTypeEnum.REQUEST_CONNECTION;
+    private static final MessageTypeEnum messageTypeEnum = MessageTypeEnum.REQUEST_CONNECTION_F0;
 
     @Override
     public boolean matches(MessageTypeEnum messageId) {
@@ -100,7 +99,7 @@ public class RequestConnectionHandler implements DataHandler {
         buffer.writeBytes(bytes);;
 
         // messageId
-        buffer.writeByte(MessageTypeEnum.CONNECTION_REPLY.getCode());
+        buffer.writeByte(MessageTypeEnum.CONNECTION_REPLY_F1.getCode());
 
         // payload
         buffer.writeBytes(new byte[]{(byte) 0xbd, (byte) 0xbd,(byte) 0xbd,(byte) 0xbd});

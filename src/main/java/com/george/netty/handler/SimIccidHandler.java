@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class SimIccidHandler implements DataHandler {
-    private static final MessageTypeEnum messageTypeEnum = MessageTypeEnum.SIM_ICCID;
+    private static final MessageTypeEnum messageTypeEnum = MessageTypeEnum.SIM_ICCID_F3;
 
     @Override
     public boolean matches(MessageTypeEnum messageId) {
