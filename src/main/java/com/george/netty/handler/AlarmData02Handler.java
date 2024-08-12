@@ -49,7 +49,7 @@ public class AlarmData02Handler implements DataHandler {
         WristbandDataProtocol wristbandData = (WristbandDataProtocol) protocol;
         byte[] payload = wristbandData.payload();
 
-        // 告警值
+        // 告警标识
         byte[] errorHexBytes = ArrayUtil.reverse(NettyUtil.getByte(payload, 0, 2));
         int errorInt = HexUtil.hexToInt(Convert.toHex(errorHexBytes));
 
