@@ -21,7 +21,9 @@ public enum MessageTypeEnum {
     ALARM_DATA_02((byte) 0x02, "报警数据上传"),
     ALARM_DATA_16((byte) 0x16, "报警数据上传, 对0x02的补充"),
     ALARM_DATA_21((byte) 0x21, "报警数据上传, 对0x02的补充"),
-    HEALTH_DATA((byte) 0x32, "健康数据");
+    HEALTH_DATA((byte) 0x32, "健康数据"),
+    CYCLE_UPLOAD((byte) 0x17, "设置周期上传")
+    ;
 
     /**
      * 消息标识符编码

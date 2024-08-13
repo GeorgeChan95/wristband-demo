@@ -8,12 +8,14 @@ import com.george.message.Protocol;
 import com.george.message.WristbandDataProtocol;
 import com.george.model.constant.WristbandConstant;
 import com.george.model.enums.MessageTypeEnum;
+import com.george.netty.service.WristbandSettingService;
 import com.george.utils.NettyUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -30,6 +32,9 @@ import java.util.Map;
 @Component
 public class RequestConnectionHandler implements DataHandler {
     private static final MessageTypeEnum messageTypeEnum = MessageTypeEnum.REQUEST_CONNECTION_F0;
+
+    @Autowired
+    private WristbandSettingService settingService;
 
     @Override
     public boolean matches(MessageTypeEnum messageId) {
@@ -77,7 +82,11 @@ public class RequestConnectionHandler implements DataHandler {
         log.info("\n服务端响应手环连接信息: {}\n", Convert.toHex(bytes));
 
         byteBuf.resetReaderIndex();
+        // 写入响应数据
         ctx.channel().writeAndFlush(byteBuf);
+
+        // 写入设置数据(周期上传定位数据)
+        settingService.cycleUpload(ctx.channel(), 1);
     }
 
     /**
