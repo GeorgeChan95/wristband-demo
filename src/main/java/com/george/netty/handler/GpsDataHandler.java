@@ -59,17 +59,17 @@ public class GpsDataHandler implements DataHandler {
 
         // 南北向
         byte[] nsBytes = NettyUtil.getByte(payload, index, 1);
-        String ns = HexUtil.encodeHexStr(Convert.toHex(nsBytes));
+        String ns = HexUtil.decodeHexStr(HexUtil.encodeHexStr(nsBytes));
         index++;
 
         // 东西向
         byte[] ewBytes = NettyUtil.getByte(payload, index, 1);
-        String ew = HexUtil.encodeHexStr(Convert.toHex(ewBytes));
+        String ew = HexUtil.decodeHexStr(HexUtil.encodeHexStr(ewBytes));
         index++;
 
         // Status =A 表示信息内容准确。可以解析 为V可以放弃
         byte[] statusBytes = NettyUtil.getByte(payload, index, 1);
-        String status = HexUtil.encodeHexStr(Convert.toHex(statusBytes));
+        String status = HexUtil.decodeHexStr(HexUtil.encodeHexStr(statusBytes));
         index++;
 
         // 时间戳(10位:秒)
