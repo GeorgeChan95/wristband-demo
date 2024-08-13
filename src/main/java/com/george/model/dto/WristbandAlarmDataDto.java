@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * @ClassName WristbandAlarmDataDto
- * @Description TODO
+ * @Description 手环告警数据对象
  * @Author George
  * @Date 2024/8/12 15:21
  */
