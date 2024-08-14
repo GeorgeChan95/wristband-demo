@@ -87,6 +87,9 @@ public class RequestConnectionHandler implements DataHandler {
 
         // 写入设置数据(周期上传定位数据)
         settingService.cycleUpload(ctx.channel(), 1);
+
+        // 下发文本到手环
+//        settingService.messageSend(ctx.channel(), "立即撤离");
     }
 
     /**

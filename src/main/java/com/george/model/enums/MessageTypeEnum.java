@@ -23,7 +23,9 @@ public enum MessageTypeEnum {
     ALARM_DATA_21((byte) 0x21, "报警数据上传, 对0x02的补充"),
     HEALTH_DATA((byte) 0x32, "健康数据"),
     CYCLE_UPLOAD((byte) 0x17, "设置周期上传"),
-    SETTING_FEEDBACK((byte) 0xc0, "下行反馈")
+    SETTING_FEEDBACK((byte) 0xc0, "下行反馈"),
+    MESSAGE_SEND((byte) 0x28, "消息下发"),
+    GPS_FIRST((byte) 0xce, "定位GPS优先")
     ;
 
     /**
