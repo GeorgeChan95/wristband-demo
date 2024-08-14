@@ -20,7 +20,8 @@ public class NettyServerInitializer extends ChannelInitializer<SocketChannel> {
     @Override
     protected void initChannel(SocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
-
+        // 出栈处理器
+        pipeline.addLast("outHandler", new OutBoundHandler());
         // 消息预处理器
         pipeline.addLast("preHandler", new InBoundPreHandler());
         // 拆包处理器
